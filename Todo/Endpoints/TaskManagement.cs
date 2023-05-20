@@ -16,11 +16,31 @@ namespace Todo.Endpoints
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet("/", GetResultAsync);
+
             app.MapPost("/", AddTodoItemAsync);
 
             app.MapDelete("/{id}", DeleteTodoItemAsync);
 
             app.MapPut("/", UpdateTodoItemAsync);
+
+            app.MapPatch("/{id}/{status}", async (string id, TodoStatus status, IServiceProvider serviceProvider) =>
+            {
+                using var scope = serviceProvider.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                var todoItem = await dbContext.Todos.FindAsync(id);
+                if (todoItem == null)
+                {
+                    return Results.BadRequest();
+                }
+                todoItem.Status = status;
+
+                dbContext.Update(todoItem);
+                await dbContext.SaveChangesAsync();
+
+                return Results.Ok();
+
+            });
 
         }
         private async Task<IResult> GetResultAsync(HttpContext context, UserManager<AppUser> userManager, IServiceProvider serviceProvider)
@@ -36,7 +56,6 @@ namespace Todo.Endpoints
 
             return Results.Ok(tasks);
         }
-
 
         private async Task<IResult> AddTodoItemAsync(HttpContext context, AddTodoItemDto addTodoItemDto, UserManager<AppUser> userManager, IServiceProvider serviceProvider)
         {
