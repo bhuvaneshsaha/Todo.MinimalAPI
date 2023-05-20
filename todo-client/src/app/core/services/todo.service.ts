@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class TodoService {
 
-  private baseUrl = '/mytask';
+  baseUrl = '/mytask';
 
   constructor(private http: HttpClient) { }
 

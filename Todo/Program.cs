@@ -30,6 +30,15 @@ builder.Services.AddIdentityCore<AppUser>(config => { config.User.RequireUniqueE
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "cors",
+                      builder =>
+                      {
+                          builder.WithOrigins("http://localhost:4200", "https://localhost:4200");
+                      });
+});
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("admin", policy => policy.RequireRole("admin"));
@@ -69,6 +78,11 @@ if (app.Environment.IsDevelopment())
 using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 await dbContext.Database.EnsureCreatedAsync();
+
+app.UseCors(policy => policy.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .SetIsOriginAllowed(origin => true)
+                            .AllowCredentials());
 
 app.UseHttpsRedirection();
 
