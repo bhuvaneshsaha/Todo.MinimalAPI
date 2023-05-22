@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginDto } from 'src/app/shared/models/dtos/login-dto';
 import { TodoService } from 'src/app/core/services/todo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,25 +22,28 @@ export class LoginComponent {
   });
 
   authService: AuthService = inject(AuthService);
-
-  constructor() {}
+  router = inject(Router)
+  constructor() {
+  }
 
   signIn() {
-
     const email = this.login.get('email')?.value ?? '';
     const password = this.login.get('password')?.value ?? '';
     this.authService.login(email, password).subscribe({
       next: response => {
         // Handle successful login
         console.log('Logged in successfully!');
-        console.log('Logged in successfully!' +this.authService.userIsAuthenticated );
-        console.log('from login => authService', this.authService);
+        this.gotoDashboard();
       },
       error: error => {
         // Handle login error
         console.error('Login failed:', error);
       }
     });
+  }
+
+  private gotoDashboard() {
+    this.router.navigate(['/']);
   }
 }
 
