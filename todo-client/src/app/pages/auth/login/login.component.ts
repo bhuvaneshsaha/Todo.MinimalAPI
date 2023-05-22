@@ -33,6 +33,7 @@ export class LoginComponent {
         // Handle successful login
         console.log('Logged in successfully!');
         console.log('Logged in successfully!' +this.authService.userIsAuthenticated );
+        console.log('from login => authService', this.authService);
       },
       error: error => {
         // Handle login error
