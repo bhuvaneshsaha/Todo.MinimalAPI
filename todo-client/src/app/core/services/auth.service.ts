@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { LoginDto } from 'src/app/shared/models/dtos/login-dto';
 import { RegisterDto } from 'src/app/shared/models/dtos/register-dto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = 'https://localhost:7243/auth';
+  baseUrl = `${environment.baseURL}/auth`;
 
   static userToken: string | null = null;
 
