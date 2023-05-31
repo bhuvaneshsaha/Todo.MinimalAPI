@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { NavComponent } from './core/components/nav/nav.component';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +13,7 @@ import { NavComponent } from './core/components/nav/nav.component';
 })
 export class AppComponent {
   title = 'todo-client';
+
+  authService = inject(AuthService);
+
 }

@@ -1,31 +1,25 @@
 import { Routes } from '@angular/router';
 import { loggedInGuard, loggedOutGuard } from './core/guards/auth.guard';
 import { AuthService } from './core/services/auth.service';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./pages/dashboard/dashboard.component').then(
-        (mod) => mod.DashboardComponent
-      ),
-      canActivate: [loggedInGuard]
+    component: DashboardComponent,
+    canActivate: [loggedInGuard],
   },
   {
     path: 'login',
-    loadComponent: () =>
-      import('./pages/auth/login/login.component').then(
-        (mod) => mod.LoginComponent
-      ),
-      providers: [AuthService],
-      canActivate: [loggedOutGuard]
+    component: LoginComponent,
+    // providers: [AuthService],
+    canActivate: [loggedOutGuard],
   },
   {
     path: 'register',
-    loadComponent: () =>
-      import('./pages/auth/register/register.component').then(
-        (mod) => mod.RegisterComponent
-      ),
-      canActivate: [loggedOutGuard]
+    component: RegisterComponent,
+    canActivate: [loggedOutGuard],
   },
 ];

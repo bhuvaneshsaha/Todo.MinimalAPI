@@ -30,7 +30,14 @@ namespace Todo.Endpoints
                 if (!results.Succeeded) return Results.Unauthorized();
 
                 var token = await tokenGenerator.GenerateToken(user);
-                return Results.Ok(token);
+
+                var userToReturn = new UserDto();
+                userToReturn.Id = user.Id;
+                userToReturn.Name = user.Name;
+                userToReturn.Email = user.Email;
+                userToReturn.Mobile = user.PhoneNumber;
+
+                return Results.Ok(new { token = token, user = userToReturn });
             }).AllowAnonymous();
 
             app.MapPost("/register", async (RegisterDto registerDto, UserManager<AppUser> _userManager) =>

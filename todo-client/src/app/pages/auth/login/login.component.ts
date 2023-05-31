@@ -4,12 +4,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginDto } from 'src/app/shared/models/dtos/login-dto';
 import { TodoService } from 'src/app/core/services/todo.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -32,14 +32,19 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe({
       next: response => {
         // Handle successful login
-        console.log('Logged in successfully!');
         this.gotoDashboard();
+        console.log('aa',this.authService.authState);
+        this.authService.update();
       },
       error: error => {
         // Handle login error
         console.error('Login failed:', error);
       }
     });
+  }
+
+  registerUser() {
+    alert('Under development');
   }
 
   private gotoDashboard() {
