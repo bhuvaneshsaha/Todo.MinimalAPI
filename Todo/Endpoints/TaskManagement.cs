@@ -120,7 +120,7 @@ namespace Todo.Endpoints
 
             var todoItemDto = todoItem.Adapt<TodoItemDto>();
 
-            return Results.Ok(todoItem);
+            return Results.Ok(todoItemDto);
         }
 
         private async Task<IResult> DeleteTodoItemAsync(string id, IServiceProvider serviceProvider)
