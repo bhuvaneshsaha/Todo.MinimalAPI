@@ -39,11 +39,7 @@ namespace Todo.Endpoints
 
             app.MapPost("/register", async (RegisterDto registerDto, UserManager<AppUser> _userManager) =>
             {
-                var userToRegister = new AppUser();
-                userToRegister.Name = registerDto.Name;
-                userToRegister.UserName = registerDto.Email;
-                userToRegister.Email = registerDto.Email;
-                userToRegister.PhoneNumber = registerDto.Mobile;
+                var userToRegister = registerDto.Adapt<AppUser>();
 
                 userToRegister.EmailConfirmed = true;
 
