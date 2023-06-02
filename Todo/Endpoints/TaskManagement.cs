@@ -1,4 +1,5 @@
 ﻿
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -117,12 +118,7 @@ namespace Todo.Endpoints
             dbContext.Update(todoItem);
             await dbContext.SaveChangesAsync();
 
-            var todoItemDto = new TodoItemDto();
-
-            todoItemDto.Id = todoItem.Id;
-            todoItemDto.Title = todoItem.Title;
-            todoItemDto.Description = todoItem.Description;
-            todoItemDto.DueDate = DateTime.Now;
+            var todoItemDto = todoItem.Adapt<TodoItemDto>();
 
             return Results.Ok(todoItem);
         }

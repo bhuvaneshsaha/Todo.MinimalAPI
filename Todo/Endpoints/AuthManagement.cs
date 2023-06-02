@@ -1,4 +1,5 @@
 ﻿using Carter;
+using Mapster;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
@@ -31,11 +32,7 @@ namespace Todo.Endpoints
 
                 var token = await tokenGenerator.GenerateToken(user);
 
-                var userToReturn = new UserDto();
-                userToReturn.Id = user.Id;
-                userToReturn.Name = user.Name;
-                userToReturn.Email = user.Email;
-                userToReturn.Mobile = user.PhoneNumber;
+                var userToReturn = user.Adapt<UserDto>();
 
                 return Results.Ok(new { token = token, user = userToReturn });
             }).AllowAnonymous();
@@ -62,12 +59,7 @@ namespace Todo.Endpoints
                     throw new ArgumentException(sb.ToString());
                 }
 
-
-                var userToReturn = new UserDto();
-                userToReturn.Id = userToRegister.Id;
-                userToReturn.Name = registerDto.Name;
-                userToReturn.Email = registerDto.Email;
-                userToReturn.Mobile = registerDto.Mobile;
+                var userToReturn = userToRegister.Adapt<UserDto>();
 
                 return Results.Created($"/user/{userToRegister.Id}", userToReturn);
             }).AllowAnonymous();

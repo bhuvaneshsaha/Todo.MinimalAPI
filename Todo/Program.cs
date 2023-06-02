@@ -1,4 +1,5 @@
 using Carter;
+using Mapster;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Todo.Core.Models;
+using Todo.Helpers;
 using Todo.Identity.Token;
 using Todo.Infrastructure.Data;
 
@@ -18,6 +20,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCarter();
+builder.Services.AddMapster();
+
+MappingConfig.Configure();
+
 
 builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
 
