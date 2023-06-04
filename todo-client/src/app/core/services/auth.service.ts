@@ -54,11 +54,10 @@ export class AuthService {
 
         this.authState.token = res.token;
         this.authState.user = res.user;
-        // this._authState$.next(true);
         this.isLoggedIn.update(() => true);
         console.log('this.authState',this.authState);
 
-        // localStorage.setItem('token', AuthService.userToken);
+        localStorage.setItem('token', AuthService.userToken);
       }));
   }
 

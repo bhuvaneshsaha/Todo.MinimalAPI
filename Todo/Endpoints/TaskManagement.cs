@@ -39,7 +39,7 @@ namespace Todo.Endpoints
                 dbContext.Update(todoItem);
                 await dbContext.SaveChangesAsync();
 
-                return Results.Ok();
+                return Results.Ok(todoItem);
 
             });
 
@@ -54,6 +54,7 @@ namespace Todo.Endpoints
 
             var tasks = await dbContext.Todos.Where(x => x.AppUserId == user.Id).ToListAsync();
 
+            tasks = tasks.OrderByDescending(x => x.DueDate).ToList();
 
             return Results.Ok(tasks);
         }

@@ -1,5 +1,13 @@
-
-<div class="bg-gradient-to-b from-gray-900 to-gray-600 bg-gradient-to-r fixed top-0 bottom-0 left-0 right-0">
-  <app-nav [user]="this.authService.authState.user!" *ngIf="this.authService.userIsAuthenticated"></app-nav>
+<div
+  class="bg-gradient-to-b from-gray-900 to-gray-600 bg-gradient-to-r fixed top-0 bottom-0 left-0 right-0"
+>
+<div class="absolute top-0 left-0 right-0 z-10">
+  <app-nav
+  [user]="this.authService.authState.user!"
+  *ngIf="this.authService.userIsAuthenticated"
+></app-nav>
+</div>
+<div class="absolute left-0 right-0 bottom-3 {{this.authService.userIsAuthenticated? 'top-20': 'top-0'}}">
   <router-outlet></router-outlet>
+</div>
 </div>

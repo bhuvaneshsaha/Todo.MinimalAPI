@@ -22,6 +22,7 @@ export class NavComponent implements OnInit {
   userImage = signal('');
 
   async ngOnInit() {
+    if(!this.user?.email) return;
     const thumbnail = await this.gravatarService.getGravatarUrl(this.user.email, DefaultGravatarImage.Identicon);
     console.log('thumbnail', thumbnail);
     this.userImage.set(thumbnail);

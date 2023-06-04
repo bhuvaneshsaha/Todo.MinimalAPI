@@ -1,21 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { TaskDto } from 'src/app/shared/models/dtos/tasks-dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
 
-  baseUrl = '/mytask';
+  baseUrl = 'https://localhost:7243/mytask';
 
   constructor(private http: HttpClient) { }
 
-  getTasks(): Observable<any> {
-    return this.http.get<any>(this.baseUrl);
+  // TODO Need to create interceptor of adding token dynamically
+  token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhYTg3MmZhMi04NDliLTQ2ODQtYTczNi02YTZmYTVlYThjMTgiLCJlbWFpbCI6ImJodXZpQHRlc3QuY29tIiwiZ2l2ZW5fbmFtZSI6IkJodXZhbmVzaCIsIm5iZiI6MTY4NTg4Mjg0OSwiZXhwIjoxNjg2NDg3NjQ5LCJpYXQiOjE2ODU4ODI4NDl9.XgaevsKHC3Wl_QCdsOA_nMy94QHh-trNHjxGKpOFhxytaQlp8OXH9NwCp1D0BPvEg1dgw-r5UIYDk7tnkMvt6Q";
+  getTasks(): Observable<TaskDto[]> {
+    //add bearer token in the below request
+    return this.http.get<TaskDto[]>(`${this.baseUrl}`, {
+      headers: {
+        'Authorization': `Bearer ${this.token}`
+      }
+    });
   }
 
+
+
   addTask(task: any): Observable<any> {
+    //add bearer token in the below request
     return this.http.post<any>(this.baseUrl, task);
   }
 
@@ -28,9 +39,15 @@ export class TodoService {
     return this.http.delete<any>(url);
   }
 
-  updateTaskStatus(id: string, status: string): Observable<any> {
+  updateTaskStatus(id: string, status: number): Observable<TaskDto> {
     const url = `${this.baseUrl}/${id}/${status}`;
-    return this.http.patch<any>(url, {});
+
+    return this.http.patch<any>(url, null, {
+      headers: {
+        'Authorization': `Bearer ${this.token}`
+      }
+    });
+
   }
 
 }
