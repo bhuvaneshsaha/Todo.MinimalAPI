@@ -13,14 +13,10 @@ export class TodoService {
   constructor(private http: HttpClient) { }
 
   // TODO Need to create interceptor of adding token dynamically
-  token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhYTg3MmZhMi04NDliLTQ2ODQtYTczNi02YTZmYTVlYThjMTgiLCJlbWFpbCI6ImJodXZpQHRlc3QuY29tIiwiZ2l2ZW5fbmFtZSI6IkJodXZhbmVzaCIsIm5iZiI6MTY4NTg4Mjg0OSwiZXhwIjoxNjg2NDg3NjQ5LCJpYXQiOjE2ODU4ODI4NDl9.XgaevsKHC3Wl_QCdsOA_nMy94QHh-trNHjxGKpOFhxytaQlp8OXH9NwCp1D0BPvEg1dgw-r5UIYDk7tnkMvt6Q";
+  token = "11eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhYTg3MmZhMi04NDliLTQ2ODQtYTczNi02YTZmYTVlYThjMTgiLCJlbWFpbCI6ImJodXZpQHRlc3QuY29tIiwiZ2l2ZW5fbmFtZSI6IkJodXZhbmVzaCIsIm5iZiI6MTY4NTg4Mjg0OSwiZXhwIjoxNjg2NDg3NjQ5LCJpYXQiOjE2ODU4ODI4NDl9.XgaevsKHC3Wl_QCdsOA_nMy94QHh-trNHjxGKpOFhxytaQlp8OXH9NwCp1D0BPvEg1dgw-r5UIYDk7tnkMvt6Q";
   getTasks(): Observable<TaskDto[]> {
     //add bearer token in the below request
-    return this.http.get<TaskDto[]>(`${this.baseUrl}`, {
-      headers: {
-        'Authorization': `Bearer ${this.token}`
-      }
-    });
+    return this.http.get<TaskDto[]>(`${this.baseUrl}`, {});
   }
 
 
@@ -42,11 +38,7 @@ export class TodoService {
   updateTaskStatus(id: string, status: number): Observable<TaskDto> {
     const url = `${this.baseUrl}/${id}/${status}`;
 
-    return this.http.patch<any>(url, null, {
-      headers: {
-        'Authorization': `Bearer ${this.token}`
-      }
-    });
+    return this.http.patch<any>(url, null, {});
 
   }
 
