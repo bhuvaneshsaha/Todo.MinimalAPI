@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,12 +16,15 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class LoginComponent {
 
+  isError = false;
+
   login = new FormGroup<LoginForm>({
     email: new FormControl('bhuvi@test.com', {nonNullable: true}),
     password: new FormControl('$Pass@321', {nonNullable: true}),
   });
 
   authService: AuthService = inject(AuthService);
+  cdf: ChangeDetectorRef = inject(ChangeDetectorRef);
   router = inject(Router)
   constructor() {
   }
@@ -38,7 +41,10 @@ export class LoginComponent {
       },
       error: error => {
         // Handle login error
+        this.isError = true;
+        this.cdf.detectChanges();
         console.error('Login failed:', error);
+
       }
     });
   }
