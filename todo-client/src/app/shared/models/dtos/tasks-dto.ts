@@ -7,3 +7,9 @@ export interface TaskDto {
   appUserId: string
   appUser: any
 }
+
+export interface AddTaskDto {
+  title: string
+  description: string
+  dueDate: Date
+}

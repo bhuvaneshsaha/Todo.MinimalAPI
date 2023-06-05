@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TaskDto } from 'src/app/shared/models/dtos/tasks-dto';
+import { AddTaskDto, TaskDto } from 'src/app/shared/models/dtos/tasks-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ export class TodoService {
 
 
 
-  addTask(task: any): Observable<any> {
+  addTask(task: AddTaskDto): Observable<TaskDto> {
     //add bearer token in the below request
     return this.http.post<any>(this.baseUrl, task);
   }

@@ -1,0 +1,48 @@
+<form
+  [formGroup]="taskForm"
+  class="w-96 bg-white/60 backdrop-blur-lg p-6 text-white"
+>
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Title:</span>
+    </label>
+    <input
+      type="text"
+      formControlName="title"
+      placeholder="Type here your title"
+      class="input input-bordered bg-black/70 input-sm w-full max-w-xs"
+    />
+  </div>
+
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Description:</span>
+    </label>
+    <textarea
+      formControlName="description"
+      class="textarea textarea-bordered bg-black/70"
+      placeholder="Type your description"
+    ></textarea>
+  </div>
+
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Due Date::</span>
+    </label>
+    <input
+      type="date"
+      formControlName="dueDate"
+      placeholder="Type here"
+      class="input input-bordered text-white bg-black/70 input-sm w-full max-w-xs"
+    />
+  </div>
+
+  <div class="form-control w-full max-w-xs">
+    <button class="btn btn-info btn-sm mt-5" [disabled]="!taskForm.valid" (click)="addTask()">
+      Add
+    </button>
+    <button class="btn btn-link btn-sm mt-5" (click)="cancel()">
+      Cancel
+    </button>
+  </div>
+</form>
