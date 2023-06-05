@@ -19,7 +19,7 @@ const components = [TaskComponent];
 export class DashboardComponent implements OnInit {
 
   tasks!: Task[];
-  activeTask!: Task;
+  activeTask!: Task | undefined;
 
   @ViewChild('dialog') dialog!: ElementRef;
 
@@ -52,6 +52,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  select(task: Task) {
+    this.activeTask = task;
+    this.openDialog();
+  }
+
   taskAdded(taskDto: TaskDto) {
 
     const task = new Task(
@@ -66,6 +71,7 @@ export class DashboardComponent implements OnInit {
     this.tasks = [task, ...this.tasks];
 
     this.cdr.detectChanges();
+    this.closeDialog();
   }
 
   openDialog(): void {
@@ -74,6 +80,7 @@ export class DashboardComponent implements OnInit {
 
   closeDialog(): void {
     (this.dialog.nativeElement as HTMLDialogElement).close();
+    this.activeTask = undefined;
   }
 
 }

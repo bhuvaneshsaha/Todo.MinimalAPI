@@ -38,8 +38,8 @@
   </div>
 
   <div class="form-control w-full max-w-xs">
-    <button class="btn btn-info btn-sm mt-5" [disabled]="!taskForm.valid" (click)="addTask()">
-      Add
+    <button class="btn btn-info btn-sm mt-5" [disabled]="!taskForm.valid" (click)="addOrUpdateTask()">
+      {{ task?.id ? 'Update' : 'Add' }}
     </button>
     <button class="btn btn-link btn-sm mt-5" (click)="cancel()">
       Cancel

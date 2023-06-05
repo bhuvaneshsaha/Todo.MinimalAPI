@@ -42,7 +42,7 @@ export class TaskComponent {
     this.cancelOperation.emit();
   }
 
-  addTask() {
+  addOrUpdateTask() {
     if (this.taskForm.invalid) {
       return;
     }

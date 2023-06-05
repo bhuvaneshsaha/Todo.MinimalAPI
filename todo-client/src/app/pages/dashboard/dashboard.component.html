@@ -2,8 +2,8 @@
   <app-task
     *ngIf="dialog.open"
     [task]="activeTask"
-    (addedTask)="taskAdded($event); dialog.close()"
-    (cancelOperation)="dialog.close()"
+    (addedTask)="taskAdded($event);"
+    (cancelOperation)="closeDialog()"
   />
 </dialog>
 
@@ -26,6 +26,7 @@
         'border border-red-500': task.isOverdueAndStillPending
       }"
       *ngFor="let task of tasks"
+      (click)="select(task)"
     >
       <input
         type="checkbox"
