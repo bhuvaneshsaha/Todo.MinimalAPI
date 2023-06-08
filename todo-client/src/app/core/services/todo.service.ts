@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AddTaskDto, TaskDto } from 'src/app/shared/models/dtos/tasks-dto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
 
-  baseUrl = 'https://localhost:7243/mytask';
+  baseUrl = `${environment.baseURL}/mytask`;
 
   constructor(private http: HttpClient) { }
 
