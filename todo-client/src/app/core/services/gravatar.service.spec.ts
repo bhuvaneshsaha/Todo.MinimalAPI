@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { GravatarService } from './gravatar.service';
 
-import { GavatarService } from './gavatar.service';
+
 
 describe('GavatarService', () => {
-  let service: GavatarService;
+  let service: GravatarService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GavatarService);
+    service = TestBed.inject(GravatarService);
   });
 
   it('should be created', () => {

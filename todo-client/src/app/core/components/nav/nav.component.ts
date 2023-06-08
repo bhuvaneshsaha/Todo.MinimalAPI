@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DefaultGravatarImage, GravatarService } from '../../services/gavatar.service';
+import { DefaultGravatarImage, GravatarService } from '../../services/gravatar.service';
 import { AuthService, AuthState } from '../../services/auth.service';
 import { share } from 'rxjs';
 import { User } from 'src/app/shared/models/user';
