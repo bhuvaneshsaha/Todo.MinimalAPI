@@ -84,17 +84,18 @@ namespace Todo.Endpoints
             await dbContext.Todos.AddAsync(todoItemToAdd);
             await dbContext.SaveChangesAsync();
 
-            var todoItemDto = new TodoItemDto();
-
-            todoItemDto.Id = todoItemToAdd.Id;
-            todoItemDto.Title = todoItemToAdd.Title;
-            todoItemDto.Description = todoItemToAdd.Description;
-            todoItemDto.DueDate = DateTime.Now;
+            var todoItemDto = new TodoItemDto
+            {
+                Id = todoItemToAdd.Id,
+                Title = todoItemToAdd.Title,
+                Description = todoItemToAdd.Description,
+                DueDate = DateTime.Now
+            };
 
             return Results.Ok(todoItemToAdd);
         }
 
-        private async Task<IResult> UpdateTodoItemAsync(TodoItemDto updateTodo, IServiceProvider serviceProvider)
+        private async Task<IResult> UpdateTodoItemAsync(UpdateTodoDto updateTodo, IServiceProvider serviceProvider)
         {
             if (updateTodo == null)
             {
@@ -111,10 +112,7 @@ namespace Todo.Endpoints
             }
             todoItem.Title = updateTodo.Title;
             todoItem.Description = updateTodo.Description;
-            todoItem.DueDate = updateTodo.DueDate;
-            todoItem.Status = updateTodo.Status;
-
-            todoItem.Id = Guid.NewGuid().ToString();
+            todoItem.DueDate = updateTodo.DueDate ?? todoItem.DueDate;
 
             dbContext.Update(todoItem);
             await dbContext.SaveChangesAsync();

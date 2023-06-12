@@ -13,3 +13,10 @@ export interface AddTaskDto {
   description: string
   dueDate: Date
 }
+
+export interface UpdateTaskDto {
+  id: string
+  title: string
+  description: string
+  dueDate: string
+}

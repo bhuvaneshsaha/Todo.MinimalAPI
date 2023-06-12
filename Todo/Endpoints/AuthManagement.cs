@@ -59,6 +59,17 @@ namespace Todo.Endpoints
 
                 return Results.Created($"/user/{userToRegister.Id}", userToReturn);
             }).AllowAnonymous();
+
+            app.MapPost("/logout", async (SignInManager<AppUser> signInManager) =>
+            {
+                await signInManager.SignOutAsync();
+                return Results.Ok();
+            });
+            
+
         }
+
+        // endpoint for logout
+       
     }
 }

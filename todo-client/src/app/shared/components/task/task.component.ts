@@ -3,7 +3,7 @@ import { CommonModule, formatDate } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TodoService } from 'src/app/core/services/todo.service';
 import { Task } from '../../models/task';
-import { TaskDto } from '../../models/dtos/tasks-dto';
+import { AddTaskDto, TaskDto, UpdateTaskDto } from '../../models/dtos/tasks-dto';
 
 @Component({
   selector: 'app-task',
@@ -47,18 +47,24 @@ export class TaskComponent {
       return;
     }
 
-    const taskToAdd = this.taskForm.value as AddTaskDto;
+    if(!this.task?.id) {
+      const taskToAdd = this.taskForm.value as AddTaskDto;
 
-    this.todoService.addTask(taskToAdd).subscribe(x => {
-      this.addedTask.emit(x);
-    });
+      this.todoService.addTask(taskToAdd).subscribe(x => {
+        this.addedTask.emit(x);
+      });
+
+    }
+    else {
+      const taskToUpdate = this.taskForm.value as UpdateTaskDto;
+      taskToUpdate.id = this.task?.id ?? '';
+
+      this.todoService.updateTask(taskToUpdate).subscribe(x => {
+        this.addedTask.emit(x);
+      });
+    }
+
 
   }
 
-}
-
-export interface AddTaskDto {
-  title: string
-  description: string
-  dueDate: Date
 }
