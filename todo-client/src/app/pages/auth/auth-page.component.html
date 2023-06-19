@@ -12,7 +12,7 @@
       </div>
 
       <app-login *ngIf="loginTabActive"/>
-      <app-register *ngIf="!loginTabActive"/>
+      <app-register (gotoLoginPage)="loginTabActive=true" *ngIf="!loginTabActive"/>
     </div>
   </div>
 </div>

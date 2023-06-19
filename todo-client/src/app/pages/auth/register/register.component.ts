@@ -2,6 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
+  Output,
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -28,6 +30,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
+
+  @Output() gotoLoginPage = new EventEmitter<void>();
+
   error = '';
 
   // match password and confirm password
@@ -87,8 +92,8 @@ export class RegisterComponent {
     };
     this.authService.register(registerDto).subscribe({
       next: (response) => {
-        // Handle successful login
-        this.gotoDashboard();
+        this.router.navigate(['/auth/login']);
+        this.gotoLoginPage.emit();
         this.authService.update();
       },
       error: (error: HttpErrorResponse ) => {
@@ -100,7 +105,4 @@ export class RegisterComponent {
     });
   }
 
-  private gotoDashboard() {
-    this.router.navigate(['/auth']);
-  }
 }
