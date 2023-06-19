@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginDto } from 'src/app/shared/models/dtos/login-dto';
 import { TodoService } from 'src/app/core/services/todo.service';
 import { Router, RouterLink } from '@angular/router';
@@ -17,10 +17,9 @@ import { Router, RouterLink } from '@angular/router';
 export class LoginComponent {
 
   isError = false;
-
-  login = new FormGroup<LoginForm>({
-    email: new FormControl('bhuvi@test.com', {nonNullable: true}),
-    password: new FormControl('$Pass@321', {nonNullable: true}),
+  login = new FormGroup({
+    email: new FormControl('bhuvi@test.com', [Validators.required, Validators.email]),
+    password: new FormControl('$Pass@321', [Validators.required]),
   });
 
   authService: AuthService = inject(AuthService);
@@ -44,7 +43,6 @@ export class LoginComponent {
         this.isError = true;
         this.cdf.detectChanges();
         console.error('Login failed:', error);
-
       }
     });
   }
@@ -56,9 +54,9 @@ export class LoginComponent {
   private gotoDashboard() {
     this.router.navigate(['/']);
   }
-}
 
-interface LoginForm {
-  email: FormControl<string>;
-  password?: FormControl<string>;
+  isInvalidAndDirty(name: string): boolean {
+    let control = this.login.get(name);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
 }

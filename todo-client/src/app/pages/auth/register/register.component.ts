@@ -38,11 +38,11 @@ export class RegisterComponent {
   // match password and confirm password
   registerForm = new FormGroup(
     {
-      name: new FormControl('Bhuvanesh', Validators.required),
-      email: new FormControl('bhuvi@test.com', [Validators.required, Validators.email]),
-      password: new FormControl('$Pass@321', Validators.required),
-      confirmPassword: new FormControl('$Pass@321', Validators.required),
-      mobile: new FormControl('1234567890', [
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
+      confirmPassword: new FormControl('', Validators.required),
+      mobile: new FormControl('', [
         Validators.required,
         Validators.minLength(10),
         Validators.maxLength(10),
@@ -105,4 +105,8 @@ export class RegisterComponent {
     });
   }
 
+  isInvalidAndDirty(name: string): boolean {
+    let control = this.registerForm.get(name);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
 }

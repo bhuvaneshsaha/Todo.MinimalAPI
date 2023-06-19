@@ -8,8 +8,12 @@
       formControlName="email"
       placeholder="Email"
       class="input input-bordered input-sm w-full max-w-xs"
-      [ngClass]="{'input-error': isError}"
+      [ngClass]="{ 'input-error': isInvalidAndDirty('email') }"
     />
+    <div class="text-red-500" *ngIf="isInvalidAndDirty('email')">
+      <div *ngIf="login.get('email')?.errors?.['required']">Email is required</div>
+      <div *ngIf="login.get('email')?.errors?.['email']">Email is invalid</div>
+    </div>
   </div>
   <div class="form-control w-full max-w-xs">
     <label class="label">
@@ -20,14 +24,22 @@
       formControlName="password"
       placeholder="Password"
       class="input input-bordered input-sm w-full max-w-xs"
-      [ngClass]="{'input-error': isError}"
+      [ngClass]="{ 'input-error': isInvalidAndDirty('password') }"
     />
+    <div class="text-red-500" *ngIf="isInvalidAndDirty('password')">
+      <div *ngIf="login.get('password')?.errors?.['required']">Password is required</div>
+    </div>
   </div>
   <div class="text-red-700 bg-red-500/10 mt-2" *ngIf="isError">
     Incorrect username or password, try again
   </div>
-  <div class="flex mt-3 gap-2">
-    <button class="btn btn-primary btn-sm flex-auto" type="submit" (click)="signIn()">
+  <div class="text-red-500" class="flex mt-3 gap-2">
+    <button
+      class="btn btn-primary btn-sm flex-auto"
+      type="submit"
+      [disabled]="login.invalid"
+      (click)="signIn()"
+    >
       Login
     </button>
   </div>
