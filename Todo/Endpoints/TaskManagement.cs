@@ -9,7 +9,6 @@ namespace Todo.Endpoints
 {
     public class TaskManagement : CarterModule
     {
-
         public TaskManagement() : base("/mytask")
         {
             this.RequireAuthorization();
@@ -24,24 +23,7 @@ namespace Todo.Endpoints
 
             app.MapPut("/", UpdateTodoItemAsync);
 
-            app.MapPatch("/{id}/{status}", async (string id, TodoStatus status, IServiceProvider serviceProvider) =>
-            {
-                using var scope = serviceProvider.CreateScope();
-                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-                var todoItem = await dbContext.Todos.FindAsync(id);
-                if (todoItem == null)
-                {
-                    return Results.BadRequest();
-                }
-                todoItem.Status = status;
-
-                dbContext.Update(todoItem);
-                await dbContext.SaveChangesAsync();
-
-                return Results.Ok(todoItem);
-
-            });
+            app.MapPatch("/{id}/{status}", UpdateTodoStatusAsync);
 
         }
         private async Task<IResult> GetResultAsync(HttpContext context, UserManager<AppUser> userManager, IServiceProvider serviceProvider)
@@ -136,6 +118,24 @@ namespace Todo.Endpoints
             await dbContext.SaveChangesAsync();
 
             return Results.Ok("Deleted " + id);
+        }
+
+        private async Task<IResult> UpdateTodoStatusAsync(string id, TodoStatus status, IServiceProvider serviceProvider)
+        {
+            using var scope = serviceProvider.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            var todoItem = await dbContext.Todos.FindAsync(id);
+            if (todoItem == null)
+            {
+                return Results.BadRequest();
+            }
+            todoItem.Status = status;
+
+            dbContext.Update(todoItem);
+            await dbContext.SaveChangesAsync();
+
+            return Results.Ok(todoItem);
         }
     }
 }

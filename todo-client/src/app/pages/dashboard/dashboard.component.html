@@ -32,7 +32,7 @@
         placeholder="checkbox"
         type="checkbox"
         [(ngModel)]="task.status"
-        class="checkbox checkbox-sm checkbox-success"
+        class="checkbox checkbox-sm checkbox-success hover:scale-125"
         (click)="$event.stopPropagation()"
         (ngModelChange)="updateTaskStatus(task)"
       />
