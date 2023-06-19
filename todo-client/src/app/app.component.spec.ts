@@ -82,7 +82,7 @@ describe('AppComponent', () => {
   it('should display the login component when the user is not authenticated', () => {
     authService.logout();
     fixture.detectChanges();
-    router.navigate(['/login']);
+    router.navigate(['/auth']);
     fixture.detectChanges();
     const loginComponent = fixture.debugElement.query(By.css('router-outlet'));
 

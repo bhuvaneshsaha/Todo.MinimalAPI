@@ -39,6 +39,13 @@ namespace Todo.Endpoints
 
             app.MapPost("/register", async (RegisterDto registerDto, UserManager<AppUser> _userManager) =>
             {
+                var user = await _userManager.FindByEmailAsync(registerDto.Email);
+
+                if (user != null)
+                {
+                    return Results.BadRequest("Email already exists");
+                }
+
                 var userToRegister = registerDto.Adapt<AppUser>();
 
                 userToRegister.EmailConfirmed = true;

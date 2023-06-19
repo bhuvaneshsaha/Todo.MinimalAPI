@@ -4,6 +4,7 @@ import { AuthService } from './core/services/auth.service';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
+import { AuthPageComponent } from './pages/auth/auth-page.component';
 
 export const routes: Routes = [
   {
@@ -12,8 +13,8 @@ export const routes: Routes = [
     canActivate: [loggedInGuard],
   },
   {
-    path: 'login',
-    component: LoginComponent,
+    path: 'auth',
+    component: AuthPageComponent,
     // providers: [AuthService],
     canActivate: [loggedOutGuard],
   },

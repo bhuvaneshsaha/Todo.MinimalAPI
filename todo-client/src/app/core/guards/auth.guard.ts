@@ -7,7 +7,7 @@ export const loggedInGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if(!authService.userIsAuthenticated) {
-    router.navigate(['/login']);
+    router.navigate(['/auth']);
   }
   return authService.userIsAuthenticated;
 };
@@ -18,7 +18,7 @@ export const loggedOutGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if(authService.userIsAuthenticated) {
-    router.navigate(['/login']);
+    router.navigate(['/auth']);
   }
   return true;
 };

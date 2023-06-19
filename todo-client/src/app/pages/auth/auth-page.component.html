@@ -1,0 +1,18 @@
+<div
+  class="bg-red-100 h-screen mx-auto w-screen bg-gradient-to-b from-sky-400 to-sky-200"
+>
+  <div class="grid place-items-center h-full overflow-auto">
+
+    <div>
+      <div class="grid place-items-center">
+        <div class="tabs">
+          <a class="tab tab-bordered" [ngClass]="{'tab-active': loginTabActive}" (click)="loginTabActive = true">Login</a>
+          <a class="tab tab-bordered" [ngClass]="{'tab-active': !loginTabActive}" (click)="loginTabActive = false">Register</a>
+        </div>
+      </div>
+
+      <app-login *ngIf="loginTabActive"/>
+      <app-register *ngIf="!loginTabActive"/>
+    </div>
+  </div>
+</div>
