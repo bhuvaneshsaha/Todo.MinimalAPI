@@ -74,6 +74,13 @@ export class DashboardComponent implements OnInit {
     this.closeDialog();
   }
 
+  deleteTask(id: string) {
+    this.todoService.deleteTask(id).subscribe(x => {
+      this.tasks = this.tasks.filter(x => x.id !== id);
+      this.cdr.detectChanges();
+    });
+  }
+
   openDialog(): void {
     (this.dialog.nativeElement as HTMLDialogElement).showModal();
   }
