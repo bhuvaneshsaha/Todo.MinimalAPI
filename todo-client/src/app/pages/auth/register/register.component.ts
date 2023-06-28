@@ -30,7 +30,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-
   @Output() gotoLoginPage = new EventEmitter<void>();
 
   error = '';
@@ -58,12 +57,13 @@ export class RegisterComponent {
     const confirmPassword = control.get('confirmPassword')?.value;
     // console.log('password', password);
     // console.log('confirmPassword', confirmPassword);
-    if(password != confirmPassword) {
+    if (password != confirmPassword) {
       control.get('password')?.setErrors({ passwordMismatch: true });
       control.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-    }
-    else
+    } else {
+      control.get('password')?.setErrors(null);
       control.get('confirmPassword')?.setErrors(null);
+    }
     return null;
   }
 
@@ -96,7 +96,7 @@ export class RegisterComponent {
         this.gotoLoginPage.emit();
         this.authService.update();
       },
-      error: (error: HttpErrorResponse ) => {
+      error: (error: HttpErrorResponse) => {
         // Handle login error
         this.error = error.error;
         this.cdf.detectChanges();
